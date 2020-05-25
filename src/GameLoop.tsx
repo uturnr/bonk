@@ -1,15 +1,13 @@
 import PositionHelper from './PositionHelper';
 import { Dimensions } from 'react-native';
 
-const GameLoop = (entities: any, { _touches, dispatch, _events }: any) => {
+const runHammer = (entities: any, dispatch: any) => {
   const screen = {
     width: Dimensions.get('screen').width,
     height: Dimensions.get('screen').height,
   };
 
   const hammer = entities.hammer;
-  hammer.running = true;
-
   const targetSquare = entities[`square${hammer.targetSquare}`];
   const position = PositionHelper(targetSquare.squareNumber);
 
@@ -66,7 +64,8 @@ const GameLoop = (entities: any, { _touches, dispatch, _events }: any) => {
 
     // Set new target
     hammer.targetSquare = targetCol + ((targetRow - 1) * position.gridSize);
-
+    console.log(hammer.targetSquare);
+    console.log(hammer.continueOffScreen);
   }
 
   // Moving along
@@ -74,7 +73,80 @@ const GameLoop = (entities: any, { _touches, dispatch, _events }: any) => {
     hammer.positionOffset[0] + xMove,
     hammer.positionOffset[1] + yMove,
   ];
+}
 
+const GameLoop = (entities: any, { touches, dispatch, events }: any) => {
+  // const screen = {
+  //   width: Dimensions.get('screen').width,
+  //   height: Dimensions.get('screen').height,
+  // };
+  if (events.length) {
+    const startEvent = events.find((e: any) => e.type === 'start-hammer');
+    if (startEvent) {
+      entities.hammer.hammerRunning = true;
+    }
+  }
+
+
+  if (entities.hammer.hammerRunning) {
+    runHammer(entities, dispatch);
+  } else {
+    const startTouch = touches.find((t: any) => t.type === 'start');
+    const moveTouch = touches.find((t: any) => t.type === 'move');
+    const endTouch = touches.find((t: any) => t.type === 'end');
+
+    if (startTouch) {
+      const touchPosition = PositionHelper(undefined, [startTouch.event.pageX, startTouch.event.pageY]);
+      if (
+        touchPosition.matchedSquareNum &&
+        entities[`square${touchPosition.matchedSquareNum}`].contents &&
+        entities[`square${touchPosition.matchedSquareNum}`].contents.movable
+      ) {
+        entities.board.movingSquareNum = touchPosition.matchedSquareNum;
+        entities[`square${entities.board.movingSquareNum}`].positionOverride = [startTouch.event.pageX, startTouch.event.pageY];
+      }
+    }
+    if (moveTouch && entities.board.movingSquareNum) {
+      const touchPosition = PositionHelper(undefined, [moveTouch.event.pageX, moveTouch.event.pageY]);
+      if (
+        touchPosition.matchedSquareNum &&
+        entities.board.dropZoneSquareNum !== touchPosition.matchedSquareNum
+      ) {
+        // Remove old dropzone
+        if (entities.board.dropZoneSquareNum) {
+          entities[`square${entities.board.dropZoneSquareNum}`].inDropZone = false;
+          entities.board.dropZoneSquareNum = null;
+        }
+        // Set new dropzone if square is eligible
+        if (
+          !entities[`square${touchPosition.matchedSquareNum}`].contents || (
+            entities[`square${touchPosition.matchedSquareNum}`].contents &&
+            entities[`square${touchPosition.matchedSquareNum}`].contents.movable
+          )
+        ) {
+          entities.board.dropZoneSquareNum = touchPosition.matchedSquareNum;
+          entities[`square${entities.board.dropZoneSquareNum}`].inDropZone = true;
+        }
+      }
+      entities[`square${entities.board.movingSquareNum}`].positionOverride = [moveTouch.event.pageX, moveTouch.event.pageY];
+    }
+    if (endTouch && entities.board.movingSquareNum) {
+
+      entities[`square${entities.board.movingSquareNum}`].positionOverride = null;
+      if (entities.board.dropZoneSquareNum) {
+        entities[`square${entities.board.dropZoneSquareNum}`].inDropZone = false;
+        // Swap
+        const moving = entities[`square${entities.board.movingSquareNum}`];
+        entities[`square${entities.board.movingSquareNum}`] = entities[`square${entities.board.dropZoneSquareNum}`];
+        entities[`square${entities.board.movingSquareNum}`].squareNumber = entities.board.movingSquareNum;
+        entities[`square${entities.board.dropZoneSquareNum}`] = moving;
+        entities[`square${entities.board.dropZoneSquareNum}`].squareNumber = entities.board.dropZoneSquareNum;
+      }
+      entities.board.movingSquareNum = null;
+      entities.board.dropZoneSquareNum = null;
+      // swap entities
+    }
+  }
 
   return entities;
 };

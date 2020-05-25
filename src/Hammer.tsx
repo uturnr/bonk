@@ -5,13 +5,13 @@ import PositionHelper from './PositionHelper';
 
 interface IProps {
   direction: [number, number];
-  running?: boolean;
+  hammerRunning?: boolean;
   screen?: any;
   targetSquare: number;
   positionOffset: [number, number];
 }
 
-const Hammer = ({running, screen, targetSquare, positionOffset}: IProps) => {
+const Hammer = ({hammerRunning, screen, targetSquare, positionOffset}: IProps) => {
 
   if (!screen) {
     return null;
@@ -23,7 +23,7 @@ const Hammer = ({running, screen, targetSquare, positionOffset}: IProps) => {
 
   return (
     <Animatable.View
-      animation={running ? 'rotate' : undefined}
+      animation={hammerRunning ? 'rotate' : undefined}
       duration={300}
       easing="linear"
       iterationCount="infinite"
@@ -45,7 +45,7 @@ const Hammer = ({running, screen, targetSquare, positionOffset}: IProps) => {
 const styles = StyleSheet.create({
   hammer: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 20,
   },
   image: {
     height: '100%',

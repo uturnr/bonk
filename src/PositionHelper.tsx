@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 
-const PositionHelper = (squareNumber: number) => {
+const PositionHelper = (squareNumber: number = 0, touchPosition: [number, number] = [0,0]) => {
 
   const screen = {
     width: Dimensions.get('screen').width,
@@ -18,6 +18,25 @@ const PositionHelper = (squareNumber: number) => {
   const rowNumber = Math.ceil(squareNumber / gridSize);
   const rowIndex = rowNumber - 1;
   const squareY = topOffset + (rowIndex * squareDim);
+
+  const touchX = touchPosition[0];
+  const touchY = touchPosition[1];
+  const fullBoundsTopLeftX = 0;
+  const fullBoundsTopLeftY = topOffset;
+  const fullBoundsBottomRightX = screen.width;
+  const fullBoundsBottomRightY = topOffset + (squareDim * gridSize);
+  const touchPositionIsWithinFullBounds = touchX >= fullBoundsTopLeftX &&
+    touchX <= fullBoundsBottomRightX &&
+    touchY >= fullBoundsTopLeftY &&
+    touchY <= fullBoundsBottomRightY;
+
+  let matchedSquareNum;
+  if (touchPositionIsWithinFullBounds) {
+    const matchedRowNumber = Math.ceil(((touchY - topOffset) / (squareDim * gridSize)) * gridSize);
+    const matchedRowIndex = matchedRowNumber - 1;
+    const matchedColNumber = Math.ceil((touchX / (squareDim * gridSize)) * gridSize);
+    matchedSquareNum = matchedRowIndex * gridSize + matchedColNumber;
+  }
 
   const hammerWidth = squareDim / 2;
   const hammerHeight = hammerWidth / 1.5;
@@ -44,6 +63,8 @@ const PositionHelper = (squareNumber: number) => {
     squareDimWithoutMargin,
     squareX,
     squareY,
+    touchPositionIsWithinFullBounds,
+    matchedSquareNum,
   };
 };
 

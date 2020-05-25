@@ -15,20 +15,20 @@ export interface ILayout {
   [key: number]: IContents
 }
 
-export default class App extends Component<{}, { running: boolean }> {
+export default class App extends Component<{}, { hammerRunning: boolean }> {
   engine: GameEngine | null = null;
 
   constructor(props: any) {
     super(props);
     this.state = {
-      running: false,
+      hammerRunning: false,
     };
   }
 
   onEvent(e: any) {
     if (e.type === 'game-over'){
         this.setState({
-            running: false,
+          hammerRunning: false,
         });
         this.engine?.swap(this.buildEntities());
     }
@@ -60,9 +60,13 @@ export default class App extends Component<{}, { running: boolean }> {
       hammer: {
         direction: [0, 1],
         renderer: <Hammer />,
-        running: this.state.running,
+        hammerRunning: this.state.hammerRunning,
         targetSquare: 1,
         positionOffset: [0, 0],
+      },
+      board: {
+        dropZoneSquareNum: null,
+        movingSquareNum: null,
       },
     };
 
@@ -78,7 +82,8 @@ export default class App extends Component<{}, { running: boolean }> {
   }
 
   handleStartPress() {
-    this.setState({running: true});
+    this.setState({hammerRunning: true});
+    this.engine?.dispatch({ type: 'start-hammer' });
   };
 
   render () {
@@ -88,14 +93,13 @@ export default class App extends Component<{}, { running: boolean }> {
           entities={this.buildEntities()}
           onEvent={(event: any) => this.onEvent(event)}
           ref={(ref) => { this.engine = ref; }}
-          running={this.state.running}
           style={styles.container}
           systems={[GameLoop]}
         />
         <Button
           onPress={() => this.handleStartPress()}
           title="Start"
-          disabled={this.state.running}
+          disabled={this.state.hammerRunning}
           color="#841584"
         />
       </>
