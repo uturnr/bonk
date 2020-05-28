@@ -20,6 +20,10 @@
 		3DF361C6EAE84D51CA85462D /* libPods-Bonk-BonkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0AC0BB1C6197B63B3000ED /* libPods-Bonk-BonkTests.a */; };
 		9EAF22860787E69E50D679B2 /* libPods-Bonk-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17B9F34CDA443225130236B /* libPods-Bonk-tvOSTests.a */; };
 		AC2E3E0835673ABE08E90129 /* libPods-Bonk-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC3235F37BB277428A11B86 /* libPods-Bonk-tvOS.a */; };
+		C30C3308247F259300280B26 /* clink1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C30C3305247F259300280B26 /* clink1.mp3 */; };
+		C30C3309247F259300280B26 /* clink3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C30C3306247F259300280B26 /* clink3.mp3 */; };
+		C30C330A247F259300280B26 /* clink2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C30C3307247F259300280B26 /* clink2.mp3 */; };
+		C30C330C247F286400280B26 /* bonk.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C30C330B247F286400280B26 /* bonk.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +66,10 @@
 		7FEE345C8A5F6BE63767AE06 /* Pods-Bonk-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bonk-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Bonk-tvOSTests/Pods-Bonk-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		911085483FA998DE7DBDAF87 /* Pods-Bonk-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bonk-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Bonk-tvOS/Pods-Bonk-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		B91B06B6A74960586CAB2862 /* Pods-Bonk-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bonk-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Bonk-tvOS/Pods-Bonk-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C30C3305247F259300280B26 /* clink1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = clink1.mp3; path = ../../assets/mp3/clink1.mp3; sourceTree = "<group>"; };
+		C30C3306247F259300280B26 /* clink3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = clink3.mp3; path = ../../assets/mp3/clink3.mp3; sourceTree = "<group>"; };
+		C30C3307247F259300280B26 /* clink2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = clink2.mp3; path = ../../assets/mp3/clink2.mp3; sourceTree = "<group>"; };
+		C30C330B247F286400280B26 /* bonk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bonk.mp3; path = ../../assets/mp3/bonk.mp3; sourceTree = "<group>"; };
 		D17B9F34CDA443225130236B /* libPods-Bonk-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bonk-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0AC0BB1C6197B63B3000ED /* libPods-Bonk-BonkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bonk-BonkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -125,6 +133,7 @@
 		13B07FAE1A68108700A75B9A /* Bonk */ = {
 			isa = PBXGroup;
 			children = (
+				C30C32FE247F1B3100280B26 /* mp3 */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -161,7 +170,6 @@
 				7FEE345C8A5F6BE63767AE06 /* Pods-Bonk-tvOSTests.debug.xcconfig */,
 				3F77B134331069E7DBACF1D1 /* Pods-Bonk-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -196,6 +204,17 @@
 				2D02E4901E0B4A5D006451C7 /* Bonk-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C30C32FE247F1B3100280B26 /* mp3 */ = {
+			isa = PBXGroup;
+			children = (
+				C30C330B247F286400280B26 /* bonk.mp3 */,
+				C30C3305247F259300280B26 /* clink1.mp3 */,
+				C30C3307247F259300280B26 /* clink2.mp3 */,
+				C30C3306247F259300280B26 /* clink3.mp3 */,
+			);
+			path = mp3;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,8 +357,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C30C3309247F259300280B26 /* clink3.mp3 in Resources */,
+				C30C3308247F259300280B26 /* clink1.mp3 in Resources */,
+				C30C330C247F286400280B26 /* bonk.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				C30C330A247F259300280B26 /* clink2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
